@@ -88,7 +88,7 @@ userSchema.methods.deleteToken = function(token,cb){
     var user = this;
     user.update({$unset:{token:1}},(err,user)=>{
         if(err) return cb(err);
-        return cb(null,user)
+        cb(null,user)
     })
 }
 

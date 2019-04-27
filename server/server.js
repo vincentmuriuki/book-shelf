@@ -6,6 +6,7 @@ const config = require('./config/config').get(process.env.NODE_ENV);
 const auth = require('./middleware/auth');
 
 const app = express();
+var router = express.Router()
 
 mongoose.Promise = global.Promise;
 mongoose.connect(config.DATABASE,  {
@@ -18,6 +19,16 @@ const { Book } = require('./models/book')
 
 app.use(bodyParser.json());
 app.use(cookieParser());
+
+app.get('/api/auth', auth.isAuthorized, (req,res)=>{
+    res.json({
+        isAuth:true,
+        id:req.user._id,
+        email:req.user.email,
+        name:req.user.name,
+        lastname:req.user.lastname
+    })
+})
 
 
 app.get('/api/books', (req,res)=>{
@@ -60,8 +71,14 @@ app.get('/api/user_posts', (req,res)=>{
 })
 
 // GET
-
-app.get('/api/logout',auth,(req,res)=>{
+// app.get('/api/logout', auth.isAuthorized, (req, res, next)=> {
+//     req.user.deleteToken(req.token,(err,user)=>{
+//         if(err) return res.status(400).send(err);
+//         res.sendStatus(200)
+//     })
+//   })
+  
+app.use('/api/logout',auth.isAuthorized,(req,res)=>{
     req.user.deleteToken(req.token,(err,user)=>{
         if(err) return res.status(400).send(err);
         res.sendStatus(200)

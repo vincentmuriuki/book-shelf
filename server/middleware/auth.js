@@ -1,7 +1,7 @@
 const {User} = require('./../models/user');
 
 
-let auth = (req,res,next) =>{
+let isAuthorized = (req,res,next) =>{
     let token = req.cookies.auth;
 
     User.findByToken(token,(err,user)=>{
@@ -17,4 +17,4 @@ let auth = (req,res,next) =>{
 
 }
 
-module.exports = {auth}
+module.exports = {isAuthorized}
