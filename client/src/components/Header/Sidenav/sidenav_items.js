@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from'react-router-dom';
 import FontAwesome from 'react-fontawesome';
 
-const SidenavItems = (props) => {
+const SidenavItems = ({user}) => {
     const items = [
         {
             type:'navItem',
@@ -61,19 +61,18 @@ const SidenavItems = (props) => {
                 <FontAwesome name={item.icon}/>
                 {item.text}
             </Link>
-            icon
         </div>
     )
 
-    const showItems = () => {
+    const showItems = () => (
         items.map((item,i)=>{
-            return element(item,i);
+            return element(item,i)
         })
-    }
+    )
     return (
         <div>
             {showItems()}
         </div>
-    )
+    );
 };
 export default SidenavItems;

@@ -14,6 +14,6 @@ const Nav = (props) => {
         >
             <SidenavItems/>
         </SideNav>
-    )
+    );
 };
 export default Nav;
